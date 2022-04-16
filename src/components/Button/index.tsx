@@ -11,7 +11,10 @@ type Props = {
 
 export const Button: React.FC<Props> = ({ onClick, text, isOutlined = false, isDisabled = false }) => {
   return (
-    <Container onClick={onClick} isOutlined={isOutlined} disabled={isDisabled}>
+    <Container onClick={(e) => {
+      e.preventDefault();
+      onClick();
+    }} isOutlined={isOutlined} disabled={isDisabled}>
       {text}
     </Container>
   );
