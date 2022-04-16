@@ -5,6 +5,7 @@ import { theme } from './styles/theme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { AuthProvider } from './contexts/Auth';
+import { SignUp } from './pages/SignUp';
 
 export const App: React.FC = () => {
 
@@ -16,6 +17,7 @@ export const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </Router>
       </AuthProvider>
