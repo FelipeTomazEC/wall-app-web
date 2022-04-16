@@ -16,8 +16,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
   html,
-  body,
-  body > div:first-child {
+  body {
     height: 100%;
   }
 
@@ -46,6 +45,8 @@ export const GlobalStyle = createGlobalStyle`
       #root {
         position: absolute;
         z-index: ${theme.layers.base};
+        height: 100%;
+        width: 100%;
       }
     }
   `}
