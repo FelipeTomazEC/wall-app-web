@@ -6,5 +6,5 @@ export const Container = styled.div`
   align-items: center;
   padding: ${({theme}) => `${theme.spacings.medium} 2rem`};
   width: 100%;
-  height: max(100%, fit-content);
+  height: 100%;
 `;
