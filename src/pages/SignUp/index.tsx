@@ -4,7 +4,7 @@ import { TextInput } from '../../components/TextInput';
 import { Layout } from '../../components/Layout';
 import { PasswordInput } from '../../components/PasswordInput';
 import * as S from './styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth';
 
 export const SignUp: React.FC = () => {
@@ -13,7 +13,11 @@ export const SignUp: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const isButtonDisabled = !username || !email || !password;
   const { signUp } = useAuth();
-  const handleEnter = () => signUp(username, email, password);
+  const navigate = useNavigate();
+  const handleEnter = () => {
+      signUp(username, email, password)
+      .then(() => navigate('/wall', { replace: true }));
+  };
 
   return (
     <Layout>

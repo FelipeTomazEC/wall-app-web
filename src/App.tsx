@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { AuthProvider } from './contexts/Auth';
 import { SignUp } from './pages/SignUp';
+import { MessagesProvider } from './contexts/Messages';
+import { Wall } from './pages/Wall';
 
 export const App: React.FC = () => {
 
@@ -13,13 +15,16 @@ export const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </Router>
+        <MessagesProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/wall" element={<Wall />} />
+            </Routes>
+          </Router>
+        </MessagesProvider>
       </AuthProvider>
     </ThemeProvider>
   );

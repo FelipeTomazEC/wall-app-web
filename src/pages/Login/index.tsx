@@ -3,7 +3,7 @@ import { Button } from '../../components/Button';
 import { Layout } from '../../components/Layout';
 import { PasswordInput } from '../../components/PasswordInput';
 import { TextInput } from '../../components/TextInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import { useAuth } from '../../contexts/Auth';
 
@@ -11,9 +11,14 @@ export const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { login } = useAuth();
+  const navigate = useNavigate();
   const isButtonDisabled = !email || !password;
-  const handleEnter = () => login(email, password);
-  const handleEnterAsGuest = () => console.log('Entering as a guest...');
+  const handleEnter = () => {
+    login(email, password)
+    .then(() => navigate('/wall', { replace: true }));
+  }
+
+  const handleEnterAsGuest = () => navigate('/wall', { replace: true });
 
   return (
     <Layout>
