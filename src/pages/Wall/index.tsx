@@ -11,7 +11,10 @@ export const Wall: React.FC = () => {
   const { messages, postNewMessage } = useMessages();
   const { isAuthenticated } = useAuth();
   const [newMessage, setNewMessage] = useState<string>('');
-  const handlePostMessage = () => postNewMessage(newMessage);
+  const handlePostMessage = () => {
+    postNewMessage(newMessage);
+    setNewMessage('');
+  }
   
   const PostList = useMemo(() => (
     <S.PostList>
