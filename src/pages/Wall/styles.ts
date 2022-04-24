@@ -34,7 +34,7 @@ export const LoginMessage = styled.div`
   `}
 `;
 
-export const InputButtonContainer = styled.div`
+export const InputButtonContainer = styled.form`
   ${({theme}) => css`
     display: flex;
     flex-direction: column;
