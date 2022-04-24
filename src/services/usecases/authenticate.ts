@@ -2,6 +2,7 @@ import { api } from "../api"
 
 type AuthenticationResponse = {
   token: string;
+  expiredInSeconds: number;
 }
 
 export const authenticate = async (email: string, password: string) => {
@@ -14,7 +15,8 @@ export const authenticate = async (email: string, password: string) => {
     });
 
     return {
-      token: result.data.token
+      token: result.data.token,
+      expiredInSeconds: result.data.expiredInSeconds
     };
 
   } catch(err) {
