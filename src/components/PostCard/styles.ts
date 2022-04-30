@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const getRandomColor = () => {
-  const possibleColors = ['#E08700', '#93622A', '#A85010', '#8A8888'];
+  const possibleColors = ['#E08700', '#93622A', '#A85010', '#F5A623'];
   const index = Math.floor(Math.random() * possibleColors.length);
   return possibleColors.at(index);
 }
