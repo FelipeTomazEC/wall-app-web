@@ -1,11 +1,31 @@
 import useSWR from 'swr';
 import { getAllMessages } from '../services/usecases/get-all-messages';
+import { postMessage } from '../services/usecases/post-message';
+import { Message } from '../types/message';
 
 export const useMessages = () => {
+  const ONE_MINUTE = 60 * 1000;
   const swrConfig = {
     suspense: true,
-    refreshInterval: 5000
+    refreshInterval: ONE_MINUTE
   }
-  const { data } = useSWR('/messages', getAllMessages, swrConfig);
-  return data;
+  
+  const { data = [], mutate } = useSWR('/messages', getAllMessages, swrConfig);
+  const postNewMessage = async (message: string) => {
+    const newMessage: Message = {
+      id: Date.now().toString(), 
+      postedAt: new Date(), 
+      text: message, 
+      username: 'You'
+    }
+
+    mutate(postMessage(message).then(() => getAllMessages()), {
+      optimisticData: [...data, newMessage],
+      rollbackOnError: true,
+      populateCache: true,
+      revalidate: false
+    })
+  }
+
+  return { messages: data, postNewMessage };
 }

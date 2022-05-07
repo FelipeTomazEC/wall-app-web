@@ -5,7 +5,7 @@ import { PostCard } from '../PostCard';
 import { Container } from './styles';
 
 export const PostsList: React.FC = () => {
-  const messages = useMessages();
+  const { messages } = useMessages();
   
   return (
     <Container>
