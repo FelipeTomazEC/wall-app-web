@@ -33,7 +33,8 @@ export const theme: DefaultTheme = {
     white: '#EEEEEE',
     black: '#020202',
     darkGray: '#9D9C9B',
-    lightGray: '#D6D6D6'
+    lightGray: '#D6D6D6',
+    red: '#FF4B4B',
   },
   spacings: {
     xxxsmall: '0.4rem',
