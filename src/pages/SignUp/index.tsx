@@ -6,6 +6,7 @@ import { PasswordInput } from '../../components/PasswordInput';
 import * as S from './styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth';
+import { requiredFieldValidator } from '../../validators/required-field-validator';
 
 export const SignUp: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -23,8 +24,18 @@ export const SignUp: React.FC = () => {
     <Layout>
       <S.Container>
         <S.InputsContainer>
-          <TextInput label='Username' value={username} onChange={(value) => setUsername(value)} />
-          <TextInput label='E-mail' value={email} onChange={(value) => setEmail(value)} />
+          <TextInput 
+            label='Username' 
+            value={username} 
+            onChange={(value) => setUsername(value)}
+            validator={requiredFieldValidator}
+          />
+          <TextInput 
+            label='E-mail' 
+            value={email} 
+            onChange={(value) => setEmail(value)}
+            validator={requiredFieldValidator}
+          />
           <PasswordInput label='Password' value={password} onChange={(value) => setPassword(value)} />
           <S.HaveAnAccount> Already have an account?{' '}
             <Link to="/login">Log In</Link>  

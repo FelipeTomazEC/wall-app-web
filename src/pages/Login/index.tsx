@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Layout } from '../../components/Layout';
 import { PasswordInput } from '../../components/PasswordInput';
@@ -6,11 +6,12 @@ import { TextInput } from '../../components/TextInput';
 import { Link, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import { useAuth } from '../../contexts/Auth';
+import { emailValidator } from '../../validators/email-validator';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const isButtonDisabled = !email || !password;
   const handleEnter = () => {
@@ -19,12 +20,23 @@ export const Login: React.FC = () => {
   }
 
   const handleEnterAsGuest = () => navigate('/wall', { replace: true });
+  
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate('/wall', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <Layout>
-      <S.Container>
+      <S.Container onSubmit={handleEnter}>
         <S.InputsContainer>
-          <TextInput label='E-mail' value={email} onChange={(value) => setEmail(value)} />
+          <TextInput 
+            label='E-mail' 
+            value={email} 
+            onChange={(value) => setEmail(value)} 
+            validator={emailValidator}
+          />
           <PasswordInput label='Password' value={password} onChange={(value) => setPassword(value)} />
           <S.NotRegisteredYet>Not registered yet? {' '}
             <Link to="/signup">Create an account</Link>
