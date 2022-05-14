@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Either, success } from '../../types/either';
+import { success } from '../../types/either';
 import { RiAlertFill } from 'react-icons/ri';
 import * as S from './styles';
 import { useTheme } from 'styled-components';
+import { Validator } from '../../types/validator';
 
 type Props = {
   label: string;
   onChange: (value: string) => void;
   value: string;
-  validator?: (value: string) => Either<Error, void>;
+  validator?: Validator;
 }
 
 export const TextInput: React.FC<Props> = ({ label, onChange, value, validator = () => success(undefined) }) => {
