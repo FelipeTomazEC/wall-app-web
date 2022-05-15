@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Button } from '../../components/Button';
-import { TextInput } from '../../components/TextInput';
+import { RequiredTextInput as TextInput, EmailInput } from '../../components/TextInput';
 import { Layout } from '../../components/Layout';
-import { PasswordInput } from '../../components/PasswordInput';
+import { RequiredPasswordInput as PasswordInput } from '../../components/PasswordInput';
 import * as S from './styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth';
@@ -49,16 +49,14 @@ export const SignUp: React.FC = () => {
               setUsername(value);
               formValidator.changeValue('username', value);
             }}
-            validator={requiredFieldValidator}
           />
-          <TextInput 
+          <EmailInput 
             label='E-mail' 
             value={email} 
             onChange={(value) => {
               setEmail(value);
               formValidator.changeValue('email', value);
             }}
-            validator={emailValidator}
           />
           <PasswordInput 
             label='Password' 

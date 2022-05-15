@@ -8,8 +8,8 @@ export const Label = styled.label`
   `}
 `;
 
-export const Container = styled.div`
-  ${({theme}) => css`
+export const Container = styled.div<{hasError: boolean}>`
+  ${({theme, hasError}) => css`
     display: flex;
     width: 31rem;
     height: 5rem;
@@ -18,6 +18,9 @@ export const Container = styled.div`
     background-color: ${theme.colors.white};
     align-items: center;
     padding-right: ${theme.spacings.xsmall};
+    border-width: ${hasError ? '0.3rem' : '0'};
+    border-style: ${hasError ? 'solid' : 'none'};
+    border-color: ${theme.colors.red};
   `}
 `;
 
@@ -35,5 +38,12 @@ export const Input = styled.input`
     :focus {
       outline: none;
     }
+  `}
+`;
+
+export const ErrorMessage = styled.span`
+  ${({theme}) => css`
+    color: ${theme.colors.red};
+    font-size: ${theme.font.sizes.xsmall};
   `}
 `;

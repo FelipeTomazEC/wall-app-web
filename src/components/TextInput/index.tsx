@@ -1,37 +1,26 @@
-import React, { useState } from 'react';
-import { success } from '../../types/either';
+import React from 'react';
 import { RiAlertFill } from 'react-icons/ri';
 import * as S from './styles';
 import { useTheme } from 'styled-components';
-import { Validator } from '../../types/validator';
+import { withValidation } from '../../hocs/with-validation';
+import { requiredFieldValidator } from '../../validators/required-field-validator';
+import { emailValidator } from '../../validators/email-validator';
 
 type Props = {
   label: string;
   onChange: (value: string) => void;
   value: string;
-  validator?: Validator;
+  error?: string;
 }
 
-export const TextInput: React.FC<Props> = ({ label, onChange, value, validator = () => success(undefined) }) => {
-  const [error, setError] = useState<string>('');
+export const TextInput: React.FC<Props> = ({ label, onChange, value, error }) => {
   const theme = useTheme();
-
-  const handleOnChange = (value: string) => {
-    onChange(value);
-
-    const validation = validator(value);
-    if (validation.isFailure()) {
-      setError(validation.value.message);
-    } else {
-      setError('');
-    }
-  };
 
   return (
     <S.Label> {label}
       <S.Container hasError={!!error}>
         <S.Input
-          onChange={(e) => handleOnChange(e.target.value)}
+          onChange={(e) => onChange(e.target.value)}
           spellCheck={false}
           value={value}
         />
@@ -41,3 +30,7 @@ export const TextInput: React.FC<Props> = ({ label, onChange, value, validator =
     </S.Label>
   );
 }
+
+export const RequiredTextInput = withValidation(TextInput, requiredFieldValidator);
+
+export const EmailInput = withValidation(TextInput, emailValidator);

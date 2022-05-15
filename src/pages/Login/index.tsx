@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Layout } from '../../components/Layout';
-import { PasswordInput } from '../../components/PasswordInput';
-import { TextInput } from '../../components/TextInput';
+import { RequiredPasswordInput as PasswordInput } from '../../components/PasswordInput';
+import { EmailInput } from '../../components/TextInput';
 import { Link, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import { useAuth } from '../../contexts/Auth';
@@ -36,21 +36,21 @@ export const Login: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+
   return (
     <Layout>
       <Toast/>
       <S.Container onSubmit={handleEnter}>
         <S.InputsContainer>
-          <TextInput 
+          <EmailInput 
             label='E-mail' 
             value={email} 
             onChange={(value) => {
               setEmail(value);
               validator.changeValue('email', value);
-            }} 
-            validator={emailValidator}
+            }}
           />
-          <PasswordInput 
+          <PasswordInput
             label='Password' 
             value={password} 
             onChange={(value) => {
