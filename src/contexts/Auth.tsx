@@ -1,12 +1,12 @@
 import React, { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { createContext } from "react";
 import { authenticate } from '../services/usecases/authenticate';
-import { registerUser } from '../services/usecases/register-user';
+import { registerUser, RegisterUserRequest } from '../services/usecases/register-user';
 
 type AuthContextData = {
   isAuthenticated: boolean;
   login: (email: string, password: string, onSuccess: () => void, onError: (message: string) => void) => Promise<void>;
-  signUp: (username: string, email: string, password: string) => Promise<void>;
+  signUp: (request: RegisterUserRequest, onSuccess: () => void, onError: (message: string) => void) => Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -34,12 +34,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await authenticate(request, handleOnSuccess, onError);
   }
 
-  const signUp = async (username: string, email: string, password: string) => {
-    const id = await registerUser(username, email, password);
-    if (id) {
-      await login(email, password, () => undefined, () => undefined);
-      setIsAuthenticated(true);
-    }
+  const signUp = async (
+    request: RegisterUserRequest, 
+    onSuccess: () => void,
+    onError: (message: string) => void
+  ) => {
+    await registerUser(request, onSuccess, onError);
   }
 
   const handleTokenExpiration = useCallback((expiredAt: number) => {

@@ -9,16 +9,24 @@ import { useAuth } from '../../contexts/Auth';
 import { requiredFieldValidator } from '../../validators/required-field-validator';
 import { FormValidator } from '../../validators/form-validator';
 import { emailValidator } from '../../validators/email-validator';
+import { display, Toast } from '../../components/Toast';
 
 export const SignUp: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { signUp } = useAuth();
+  const { signUp, login } = useAuth();
   const navigate = useNavigate();
   const handleEnter = () => {
-    signUp(username, email, password)
-    .then(() => navigate('/wall', { replace: true }));
+    const handleSignUpSuccess = () => {
+      const handleLoginSuccess = () => navigate('/wall', { replace: true });
+      const handleLoginError = () => display('error', 'Sorry! Something went wrong.');
+      login(email, password, handleLoginSuccess, handleLoginError);
+    };
+
+    const handleSignUpError = (message: string) => display('error', message);
+    const request = { email, password, username }; 
+    signUp(request, handleSignUpSuccess, handleSignUpError);
   };
 
   const formValidator = useMemo(() => {
@@ -31,6 +39,7 @@ export const SignUp: React.FC = () => {
 
   return (
     <Layout>
+      <Toast />
       <S.Container>
         <S.InputsContainer>
           <TextInput 
