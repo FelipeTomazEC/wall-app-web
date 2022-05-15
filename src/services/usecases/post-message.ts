@@ -1,11 +1,15 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import { api } from "../api";
 
 type PostMessageResponse = {
   id: string;
 }
 
-export const postMessage = async (message: string) => {
+export const postMessage = async (
+  message: string,
+  onSuccess: () => void,
+  onError: (message: string) => void
+) => {
   try {
     const endpoint = '/messages';
     const config: AxiosRequestConfig = {
@@ -13,7 +17,9 @@ export const postMessage = async (message: string) => {
     };
     const body = { message };
     await api.post<PostMessageResponse>(endpoint, body, config);
-  } catch (error) {
-    console.error(error);
+    onSuccess();
+  } catch (err) {
+    const { error } = (err as AxiosError).response?.data;
+    onError(error.message);
   }
 }

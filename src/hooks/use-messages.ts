@@ -11,7 +11,11 @@ export const useMessages = () => {
   }
   
   const { data = [], mutate } = useSWR('/messages', getAllMessages, swrConfig);
-  const postNewMessage = async (message: string) => {
+  const postNewMessage = async (
+    message: string,
+    onSuccess: () => void,
+    onError: (message: string) => void
+  ) => {
     const newMessage: Message = {
       id: Date.now().toString(), 
       postedAt: new Date(), 
@@ -19,7 +23,7 @@ export const useMessages = () => {
       username: 'You'
     }
 
-    mutate(postMessage(message).then(() => getAllMessages()), {
+    mutate(postMessage(message, onSuccess, onError).then(() => getAllMessages()), {
       optimisticData: [...data, newMessage],
       rollbackOnError: true,
       populateCache: true,
