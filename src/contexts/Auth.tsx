@@ -5,7 +5,7 @@ import { registerUser } from '../services/usecases/register-user';
 
 type AuthContextData = {
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, onSuccess: () => void, onError: (message: string) => void) => Promise<void>;
   signUp: (username: string, email: string, password: string) => Promise<void>;
 }
 
@@ -14,23 +14,30 @@ export const AuthContext = createContext({} as AuthContextData);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const login = async (email: string, password: string) => {
-    const result = await authenticate(email, password);
-    if (result) {
-      const { token, expiredInSeconds } = result;
+  const login = async (
+    email: string,
+    password: string,
+    onSuccess: () => void,
+    onError: (message: string) => void
+  ) => {
+    const handleOnSuccess = (token: string, expiredInSeconds: number) => {
       const expiredInMilliseconds = expiredInSeconds * 1000;
       const expiredAt = Date.now() + expiredInMilliseconds;
       localStorage.setItem("token", token);
       localStorage.setItem("expiredAt", expiredAt.toString());
       setIsAuthenticated(true);
       handleTokenExpiration(expiredAt);
-    }
+      onSuccess();
+    };
+
+    const request = { email, password };
+    await authenticate(request, handleOnSuccess, onError);
   }
 
   const signUp = async (username: string, email: string, password: string) => {
     const id = await registerUser(username, email, password);
     if (id) {
-      await login(email, password);
+      await login(email, password, () => undefined, () => undefined);
       setIsAuthenticated(true);
     }
   }

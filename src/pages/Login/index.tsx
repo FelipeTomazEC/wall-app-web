@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/Auth';
 import { emailValidator } from '../../validators/email-validator';
 import { FormValidator } from '../../validators/form-validator';
 import { requiredFieldValidator } from '../../validators/required-field-validator';
+import { display, Toast } from '../../components/Toast';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -16,8 +17,9 @@ export const Login: React.FC = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const handleEnter = () => {
-    login(email, password)
-    .then(() => navigate('/wall', { replace: true }));
+    const onSuccess = () => navigate('/wall', { replace: true });
+    const onError = (message: string) => display('error', message);
+    login(email, password, onSuccess, onError)
   }
 
   const handleEnterAsGuest = () => navigate('/wall', { replace: true });
@@ -36,6 +38,7 @@ export const Login: React.FC = () => {
 
   return (
     <Layout>
+      <Toast/>
       <S.Container onSubmit={handleEnter}>
         <S.InputsContainer>
           <TextInput 

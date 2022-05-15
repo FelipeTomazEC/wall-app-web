@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { api } from "../api"
 
 type AuthenticationResponse = {
@@ -5,22 +6,23 @@ type AuthenticationResponse = {
   expiredInSeconds: number;
 }
 
-export const authenticate = async (email: string, password: string) => {
+type Request = {
+  email: string;
+  password: string;
+}
+
+export const authenticate = async (
+  request: Request, 
+  onSuccess: (token: string, expiresInSeconds: number) => void,
+  onError: (message: string) => void
+  ) => {
   const endpoint = '/token'
 
   try {
-    const result = await api.post<AuthenticationResponse>(endpoint, {
-      email,
-      password
-    });
-
-    return {
-      token: result.data.token,
-      expiredInSeconds: result.data.expiredInSeconds
-    };
-
+    const result = await api.post<AuthenticationResponse>(endpoint, request);
+    onSuccess(result.data.token, result.data.expiredInSeconds);
   } catch(err) {
-    console.error(err);
-    return null;
+    const { error } = (err as AxiosError).response?.data;
+    onError(error.message);
   }
 }
