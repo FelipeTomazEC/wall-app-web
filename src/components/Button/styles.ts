@@ -15,7 +15,8 @@ export const Container = styled.button<Props>`
     font-weight: ${theme.font.bold};
     border-color: ${isOutlined ? theme.colors.primary : 'none' };
     border-style: ${isOutlined ? 'solid' : 'none' };
-
+    cursor: pointer;
+    
     :disabled {
       color: ${theme.colors.lightGray};
       background-color: ${theme.colors.darkGray};
