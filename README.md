@@ -2,6 +2,12 @@
 
 [**The Wall App**](https://wall-app-web.vercel.app/) is an application where users can see awesome messages posted by the community members. The users can also register to the platform and start sharing their own thoughts on **The Wall**.
 
+
+https://user-images.githubusercontent.com/36672867/169701012-b3208746-0b2b-410e-be8a-3f9173cab11b.mp4
+
+
+
+
 # Tools
 **The Wall** web was built using [ReactJS](https://reactjs.org/), a Javascript library that makes creating web applications fun and productive. Moreover, this projects uses libraries such as [Styled Components](https://styled-components.com/), [Axios](https://axios-http.com/) and [SWR](https://swr.vercel.app/).
 
