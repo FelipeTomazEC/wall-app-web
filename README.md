@@ -33,3 +33,16 @@ To run this project you must have:
  4. Make a copy of the `example.env` file, and name it as `.env`: `$ cp example.env .env`
  5. Open the  `.env`  in an editor of your preference and edit the variables values.
  6. That's all. Now you can run it with the command:  `$ yarn start`
+
+## Running with Docker
+It's also possible to run the application on your local machine using Docker. In order to do that, you'll need [Docker](https://www.docker.com/get-started/) and [Docker Compose](https://docs.docker.com/compose/install/) installed. After installing these tools, do the following:
+
+1. Make a copy of the **example.env** file, and name it as **.env**: `$ cp example.env .env`
+
+2. Open the `.env` in an editor of your preference and edit the variables values.
+
+3. Run Docker Compose command on the command line: `$ docker-compose up -d`
+
+4. That's it. The Wall API should be available on http://localhost:3001/. 
+
+> *P.S.: The 3001 is the PORT variable defined in .env file.*
