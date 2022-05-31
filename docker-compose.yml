@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  frontend:
+    container_name: the-wall-app-frontend
+    build: 
+      context: .
+      args:
+        - BACKEND_URL=${REACT_APP_BACKEND_URL}
+    image: felipetomazec/the-wall-app-frontend
+    ports:
+      - ${PORT:-3001}:3001
